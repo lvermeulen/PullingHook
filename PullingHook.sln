@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook", "src\PullingHook\PullingHook.csproj", "{0E5C3E75-AFA0-495E-8209-110AA1F2147C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Scheduler.FluentScheduler", "src\PullingHook.Scheduler.FluentScheduler\PullingHook.Scheduler.FluentScheduler.csproj", "{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Tests", "tests\PullingHook.Tests\PullingHook.Tests.csproj", "{BEEE206D-BCD5-42EE-BAEC-672579D09E54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E5C3E75-AFA0-495E-8209-110AA1F2147C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5C3E75-AFA0-495E-8209-110AA1F2147C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5C3E75-AFA0-495E-8209-110AA1F2147C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5C3E75-AFA0-495E-8209-110AA1F2147C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BEEE206D-BCD5-42EE-BAEC-672579D09E54} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
+	EndGlobalSection
+EndGlobal
