@@ -4,29 +4,73 @@ using System.Linq;
 
 namespace PullingHook
 {
-    public class PullingHookManager<T> : IPullingHookManager<T>
+    public class PullingHookManager<T, TKeyProperty> : IPullingHookManager<T>
+        where T : class
     {
+        private readonly Func<T, TKeyProperty> _keyPropertySelector;
         private readonly List<IPullingConfiguration<T>> _configurations = new List<IPullingConfiguration<T>>();
 
-        public Func<T, T> ResultHandler { get; set; }
+        public IPullingSourceStorage<T> Storage { get; set; }
 
-        public Action<IPullingConfiguration<T>> ScheduledAction => pullingConfiguration =>
+        private void PerformScheduledAction(IPullingConfiguration<T> pullingConfiguration)
         {
-            var result = pullingConfiguration.Source.Pull();
+            // pull new values
+            var newValues = pullingConfiguration.Source.Pull()
+                .ToList(); //TODO: avoid enumerable resolution
 
-            var resultHandler = ResultHandler ?? (t => t);
-            var handledResult = resultHandler(result);
+            // get previous values
+            string key = typeof(T).Name; //TODO: include generic parameters in key
+            var previousValues = Storage.Retrieve(key);
 
+            // analyze differences
+            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, _keyPropertySelector);
+            var results = unitOfWork.Merge();
+
+            // store new values
+            Storage.Store(key, newValues);
+
+            // notify all
             var source = pullingConfiguration.Source;
             var sink = pullingConfiguration.Sink;
-            var comparer = sink.Comparer;
-            if (comparer == null || sink.Comparer.Compare(result, handledResult) != 0)
+            //TODO: only notify when any inserts/updates/deletes
+            sink.Notify(source.Name, source.Description, results);
+
+            // notify each insert
+            if (sink.OnAdded != null)
             {
-                sink.Notify(source.Name, source.Description, result);
+                foreach (var added in results.Inserts)
+                {
+                    sink.OnAdded(source.Name, source.Description, added);
+                }
             }
-        };
+
+            // notify each update
+            if (sink.OnUpdated != null)
+            {
+                foreach (var updated in results.Updates)
+                {
+                    sink.OnUpdated(source.Name, source.Description, updated);
+                }
+            }
+
+            // notify each delete
+            if (sink.OnRemoved != null)
+            {
+                foreach (var removed in results.Deletes)
+                {
+                    sink.OnRemoved(source.Name, source.Description, removed);
+                }
+            }
+        }
+
+        public Action<IPullingConfiguration<T>> ScheduledAction => PerformScheduledAction;
 
         public IEnumerable<IPullingConfiguration<T>> Configurations => _configurations.AsEnumerable();
+
+        public PullingHookManager(Func<T, TKeyProperty> keyPropertySelector)
+        {
+            _keyPropertySelector = keyPropertySelector;
+        }
 
         public IPullingConfiguration<T> Add(IPullingConfiguration<T> configuration)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PullingHook
 {
@@ -6,6 +7,6 @@ namespace PullingHook
     {
         string Name { get; }
         string Description { get; }
-        Func<T> Pull { get; }
+        Func<IEnumerable<T>> Pull { get; }
     }
 }

@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="HashedPair.cs" />
+    <Compile Include="IPullingSourceStorage.cs" />
+    <Compile Include="KeyComparer.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="IPullingScheduler.cs" />
     <Compile Include="IPullingConfiguration.cs" />
     <Compile Include="IPullingSchedule.cs" />
@@ -53,6 +58,8 @@
     <Compile Include="PullingSink.cs" />
     <Compile Include="PullingSource.cs" />
     <Compile Include="SubscriptionBase.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="UnitOfWorkResults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

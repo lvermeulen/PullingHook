@@ -5,7 +5,7 @@ namespace PullingHook
 {
     public interface IPullingHookManager<T>
     {
-        Func<T, T> ResultHandler { get; }
+        IPullingSourceStorage<T> Storage { get; }
         Action<IPullingConfiguration<T>> ScheduledAction { get; }
         IEnumerable<IPullingConfiguration<T>> Configurations { get; }
         IPullingConfiguration<T> Add(IPullingConfiguration<T> configuration);

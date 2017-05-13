@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PullingHook
 {
     public static class PullingSource
     {
-        public static IPullingSource<T> Create<T>(string name, string description, Func<T> pull) => new PullingSource<T>
+        public static IPullingSource<T> Create<T>(string name, string description, Func<IEnumerable<T>> pull) => new PullingSource<T>
         {
             Name = name,
             Description = description,
@@ -16,6 +17,6 @@ namespace PullingHook
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Func<T> Pull { get; set; }
+        public Func<IEnumerable<T>> Pull { get; set; }
     }
 }

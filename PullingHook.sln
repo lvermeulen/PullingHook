@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Scheduler.Fluen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Tests", "tests\PullingHook.Tests\PullingHook.Tests.csproj", "{BEEE206D-BCD5-42EE-BAEC-672579D09E54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Storage.Memory", "src\PullingHook.Storage.Memory\PullingHook.Storage.Memory.csproj", "{FA030029-97D9-4DC9-85CA-F3E64B529B7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEEE206D-BCD5-42EE-BAEC-672579D09E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA030029-97D9-4DC9-85CA-F3E64B529B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA030029-97D9-4DC9-85CA-F3E64B529B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA030029-97D9-4DC9-85CA-F3E64B529B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA030029-97D9-4DC9-85CA-F3E64B529B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
