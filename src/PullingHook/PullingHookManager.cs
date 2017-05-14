@@ -19,7 +19,7 @@ namespace PullingHook
                 .ToList(); //TODO: avoid enumerable resolution
 
             // get previous values
-            string key = typeof(T).Name; //TODO: include generic parameters in key
+            string key = typeof(T).GetAllTypeNames();
             var previousValues = Storage.Retrieve(key);
 
             // analyze differences

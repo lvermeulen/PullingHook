@@ -58,6 +58,7 @@
     <Compile Include="PullingSink.cs" />
     <Compile Include="PullingSource.cs" />
     <Compile Include="SubscriptionBase.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UnitOfWorkResults.cs" />
   </ItemGroup>
