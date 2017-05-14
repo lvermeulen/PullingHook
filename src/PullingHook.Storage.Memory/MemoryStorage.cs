@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PullingHook.Storage.Memory
 {
     public class MemoryStorage<T> : IPullingSourceStorage<T>
     {
-        private readonly Dictionary<string, IEnumerable<HashedPair<T>>> _storage = new Dictionary<string, IEnumerable<HashedPair<T>>>();
+        private readonly ConcurrentDictionary<string, IEnumerable<HashedPair<T>>> _storage = new ConcurrentDictionary<string, IEnumerable<HashedPair<T>>>();
 
         public IEnumerable<HashedPair<T>> Retrieve(string key)
         {
