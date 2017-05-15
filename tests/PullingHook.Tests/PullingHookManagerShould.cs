@@ -35,11 +35,9 @@ namespace PullingHook.Tests
                     sourceValues = values;
                 });
 
-            var hasher = new Sha1Hasher();
             var manager = new PullingHookManager<TypedValue<DateTimeOffset>, DateTimeOffset>(x => x.Value)
             {
-                Hasher = hasher,
-                Storage = new MemoryStorage<TypedValue<DateTimeOffset>>(hasher)
+                Storage = new MemoryStorage<TypedValue<DateTimeOffset>>(new Sha1Hasher())
             };
             manager.Add(new PullingConfiguration<TypedValue<DateTimeOffset>, DateTimeOffset> (TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 
@@ -70,11 +68,9 @@ namespace PullingHook.Tests
                 newValues = values;
             });
 
-            var hasher = new Sha1Hasher();
             var manager = new PullingHookManager<TypedValue<int>, int>(x => x.Value)
             {
-                Hasher = hasher,
-                Storage = new MemoryStorage<TypedValue<int>>(hasher)
+                Storage = new MemoryStorage<TypedValue<int>>(new Sha1Hasher())
             };
             manager.Add(new PullingConfiguration<TypedValue<int>, int>(TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 

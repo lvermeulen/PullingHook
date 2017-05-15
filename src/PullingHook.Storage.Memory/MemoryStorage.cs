@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+// ReSharper disable PossibleMultipleEnumeration
+
 namespace PullingHook.Storage.Memory
 {
     public class MemoryStorage<T> : IPullingSourceStorage<T>
@@ -25,9 +27,12 @@ namespace PullingHook.Storage.Memory
             return values;
         }
 
-        public void Store(string key, IEnumerable<T> values)
+        public IEnumerable<HashedPair<T>> Store(string key, IEnumerable<T> values)
         {
-            _storage[key] = values.Select(x => new HashedPair<T>(x, _hasher));
+            var results = values.Select(x => new HashedPair<T>(x, _hasher));
+            _storage[key] = results;
+
+            return results;
         }
     }
 }

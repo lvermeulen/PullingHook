@@ -10,7 +10,6 @@ namespace PullingHook
         private readonly List<IPullingConfiguration<T, TKeyProperty>> _configurations = new List<IPullingConfiguration<T, TKeyProperty>>();
 
         public IPullingSourceStorage<T> Storage { get; set; }
-        public IHasher Hasher { get; set; }
 
         private void NotifyEach(Action<string, string, T> action, IEnumerable<T> items, string sourceName, string sourceDescription)
         {
@@ -28,18 +27,17 @@ namespace PullingHook
         private void PerformScheduledAction(IPullingConfiguration<T, TKeyProperty> pullingConfiguration)
         {
             // pull new values
-            var newValues = pullingConfiguration.Source.Pull()
-                .ToList(); //TODO: avoid enumerable resolution
+            var newValues = pullingConfiguration.Source.Pull();
 
             // get previous values
             string key = typeof(T).GetAllTypeNames();
             var previousValues = Storage.Retrieve(key);
 
             // store new values
-            Storage.Store(key, newValues);
+            var hashedNewValues = Storage.Store(key, newValues);
 
             // analyze differences
-            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, Hasher, _keyPropertySelector);
+            var unitOfWork = new UnitOfWork<T, TKeyProperty>(hashedNewValues, previousValues, _keyPropertySelector);
             var results = unitOfWork.Merge();
 
             // notify all

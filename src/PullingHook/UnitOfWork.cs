@@ -15,34 +15,31 @@ namespace PullingHook
             public bool HasChanges => Inserts.Any() || Updates.Any() || Deletes.Any();
         }
 
-        private readonly IEnumerable<T> _source;
+        private readonly IEnumerable<HashedPair<T>> _source;
         private readonly IEnumerable<HashedPair<T>> _target;
-        private readonly IHasher _hasher;
         private readonly Func<T, TKeyProperty> _keyPropertySelector;
 
-        public UnitOfWork(IEnumerable<T> source, IEnumerable<HashedPair<T>> target, IHasher hasher, Func<T, TKeyProperty> keyPropertySelector)
+        public UnitOfWork(IEnumerable<HashedPair<T>> source, IEnumerable<HashedPair<T>> target, Func<T, TKeyProperty> keyPropertySelector)
         {
             _source = source;
             _target = target;
-            _hasher = hasher;
             _keyPropertySelector = keyPropertySelector;
         }
 
         public Results Merge()
         {
             var updates = from sourceResult in _source
-                          join targetResult in _target on _keyPropertySelector(sourceResult) equals _keyPropertySelector(targetResult.Value)
-                          let hashedSourceResult = new HashedPair<T>(sourceResult, _hasher)
-                          where hashedSourceResult.HashValue != targetResult.HashValue
-                          select hashedSourceResult;
+                          join targetResult in _target on _keyPropertySelector(sourceResult.Value) equals _keyPropertySelector(targetResult.Value)
+                          where sourceResult.HashValue != targetResult.HashValue
+                          select sourceResult;
 
             var uniqueComparer = new KeyComparer<T, TKeyProperty>(_keyPropertySelector);
 
             return new Results
             {
-                Inserts = _source.Except(_target.Select(x => x.Value), uniqueComparer).ToList(),
+                Inserts = _source.Select(x => x.Value).Except(_target.Select(x => x.Value), uniqueComparer).ToList(),
                 Updates = updates.Select(x => x.Value).ToList(),
-                Deletes = _target.Select(x => x.Value).Except(_source, uniqueComparer).ToList()
+                Deletes = _target.Select(x => x.Value).Except(_source.Select(x => x.Value), uniqueComparer).ToList()
             };
         }
     }
