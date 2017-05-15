@@ -12,6 +12,19 @@ namespace PullingHook
 
         public IPullingSourceStorage<T> Storage { get; set; }
 
+        private void NotifyEach(Action<string, string, T> action, IEnumerable<T> items, string sourceName, string sourceDescription)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            foreach (var item in items)
+            {
+                action(sourceName, sourceDescription, item);
+            }
+        }
+
         private void PerformScheduledAction(IPullingConfiguration<T> pullingConfiguration)
         {
             // pull new values
@@ -22,44 +35,24 @@ namespace PullingHook
             string key = typeof(T).GetAllTypeNames();
             var previousValues = Storage.Retrieve(key);
 
-            // analyze differences
-            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, _keyPropertySelector);
-            var results = unitOfWork.Merge();
-
             // store new values
             Storage.Store(key, newValues);
+
+            // analyze differences
+            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, _keyPropertySelector); //TODO: add excludedPropertyNames
+            var results = unitOfWork.Merge();
 
             // notify all
             var source = pullingConfiguration.Source;
             var sink = pullingConfiguration.Sink;
-            //TODO: only notify when any inserts/updates/deletes
-            sink.Notify(source.Name, source.Description, results);
 
-            // notify each insert
-            if (sink.OnAdded != null)
+            if (results.HasChanges)
             {
-                foreach (var added in results.Inserts)
-                {
-                    sink.OnAdded(source.Name, source.Description, added);
-                }
-            }
+                sink.Notify(source.Name, source.Description, results);
 
-            // notify each update
-            if (sink.OnUpdated != null)
-            {
-                foreach (var updated in results.Updates)
-                {
-                    sink.OnUpdated(source.Name, source.Description, updated);
-                }
-            }
-
-            // notify each delete
-            if (sink.OnRemoved != null)
-            {
-                foreach (var removed in results.Deletes)
-                {
-                    sink.OnRemoved(source.Name, source.Description, removed);
-                }
+                NotifyEach(sink.OnAdded, results.Inserts, source.Name, source.Description);
+                NotifyEach(sink.OnUpdated, results.Updates, source.Name, source.Description);
+                NotifyEach(sink.OnRemoved, results.Deletes, source.Name, source.Description);
             }
         }
 

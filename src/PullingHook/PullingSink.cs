@@ -4,7 +4,7 @@ namespace PullingHook
 {
     public static class PullingSink
     {
-        public static IPullingSink<T> Create<T>(string name, string description, Action<string, string, UnitOfWorkResults<T>> notify) => new PullingSink<T>
+        public static IPullingSink<T> Create<T>(string name, string description, Action<string, string, UnitOfWorkResults<T>> notify = null) => new PullingSink<T>
         {
             Name = name,
             Description = description,

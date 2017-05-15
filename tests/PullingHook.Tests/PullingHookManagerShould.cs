@@ -83,19 +83,22 @@ namespace PullingHook.Tests
             // should not have changes
             isSinkNotifying = false;
             manager.ScheduledAction(manager.Configurations.First());
-            Assert.True(isSinkNotifying);
-            Assert.NotEqual(sourceResults.Inserts, newValues.Inserts);
-            Assert.Equal(sourceResults.Updates, newValues.Updates);
-            Assert.Equal(sourceResults.Deletes, newValues.Deletes);
+            Assert.False(isSinkNotifying);
 
             // should have 1 insert, 2 deletes
+            int numInserts = 0;
+            int numUpdates = 0;
+            int numDeletes = 0;
+            pullingSink.OnAdded = (source, description, item) => numInserts++;
+            pullingSink.OnUpdated = (source, description, item) => numUpdates++;
+            pullingSink.OnRemoved = (source, description, item) => numDeletes++;
             sourceValues = new[] { new TypedValue<int>(1), new TypedValue<int>(4) };
             isSinkNotifying = false;
             manager.ScheduledAction(manager.Configurations.First());
             Assert.True(isSinkNotifying);
-            Assert.Equal(1, newValues.Inserts.Count());
-            Assert.Equal(0, newValues.Updates.Count());
-            Assert.Equal(2, newValues.Deletes.Count());
+            Assert.Equal(1, numInserts);
+            Assert.Equal(0, numUpdates);
+            Assert.Equal(2, numDeletes);
         }
     }
 }
