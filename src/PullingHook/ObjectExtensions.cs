@@ -8,12 +8,6 @@ namespace PullingHook
 {
     public static class ObjectExtensions
     {
-        public static T With<T>(this T t, Action<T> action)
-        {
-            action(t);
-            return t;
-        }
-
         public static string Hash(this object obj, IEnumerable<string> excludePropertyNames = null, HashAlgorithm hashAlgorithm = null, Encoding encoding = null)
         {
             // get properties with values to hash
@@ -22,13 +16,7 @@ namespace PullingHook
                 .Where(p => excludePropertyNames == null || !excludePropertyNames.Contains(p.Name, StringComparer.InvariantCultureIgnoreCase));
 
             // get property values to hash
-            var hashSourceBuilder = new StringBuilder("");
-            foreach (var prop in props)
-            {
-                var value = prop.GetValue(obj) ?? "";
-                hashSourceBuilder.Append(value);
-            }
-            string hashSource = hashSourceBuilder.ToString();
+            string hashSource = string.Join("þ", props.Select(x => x.GetValue(obj)?.ToString() ?? ""));
 
             // hash values
             var algorithm = hashAlgorithm ?? new SHA1CryptoServiceProvider();
