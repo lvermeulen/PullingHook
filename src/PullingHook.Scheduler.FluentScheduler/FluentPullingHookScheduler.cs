@@ -2,11 +2,11 @@
 
 namespace PullingHook.Scheduler.FluentScheduler
 {
-    public class FluentPullingHookScheduler<T> : IPullingScheduler<T>
+    public class FluentPullingHookScheduler<T, TKeyProperty> : IPullingScheduler<T, TKeyProperty>
     {
-        private IPullingHookManager<T> _pullingHookManager;
+        private IPullingHookManager<T, TKeyProperty> _pullingHookManager;
 
-        public void Start(IPullingHookManager<T> pullingHookManager)
+        public void Start(IPullingHookManager<T, TKeyProperty> pullingHookManager)
         {
             _pullingHookManager = pullingHookManager;
 

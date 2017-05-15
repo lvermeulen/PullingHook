@@ -2,11 +2,11 @@
 
 namespace PullingHook
 {
-    public interface IPullingSink<T>
+    public interface IPullingSink<T, TKeyProperty>
     {
         string Name { get; }
         string Description { get; }
-        Action<string, string, UnitOfWorkResults<T>> Notify { get; }
+        Action<string, string, UnitOfWork<T, TKeyProperty>.Results> Notify { get; }
         Action<string, string, T> OnAdded { get; set; }
         Action<string, string, T> OnUpdated { get; set; }
         Action<string, string, T> OnRemoved { get; set; }

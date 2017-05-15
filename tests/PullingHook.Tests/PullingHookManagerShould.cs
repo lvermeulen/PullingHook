@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using PullingHook.Hasher.Sha1;
 using PullingHook.Storage.Memory;
 using Xunit;
 
@@ -22,11 +23,11 @@ namespace PullingHook.Tests
         {
             string sourceName = "";
             string sourceDescription = "";
-            var sourceValues = new UnitOfWorkResults<TypedValue<DateTimeOffset>>();
+            var sourceValues = new UnitOfWork<TypedValue<DateTimeOffset>, DateTimeOffset>.Results();
 
             var pullingSource = PullingSource.Create("Source", "Source description", 
                 () => Enumerable.Repeat(new TypedValue<DateTimeOffset>(DateTimeOffset.UtcNow), 1));
-            var pullingSink = PullingSink.Create<TypedValue<DateTimeOffset>> ("Sink", "Sink description",
+            var pullingSink = PullingSink.Create<TypedValue<DateTimeOffset>, DateTimeOffset> ("Sink", "Sink description",
                 (name, description, values) =>
                 {
                     sourceName = name;
@@ -34,11 +35,13 @@ namespace PullingHook.Tests
                     sourceValues = values;
                 });
 
+            var hasher = new Sha1Hasher();
             var manager = new PullingHookManager<TypedValue<DateTimeOffset>, DateTimeOffset>(x => x.Value)
             {
-                Storage = new MemoryStorage<TypedValue<DateTimeOffset>>()
+                Hasher = hasher,
+                Storage = new MemoryStorage<TypedValue<DateTimeOffset>>(hasher)
             };
-            manager.Add(new PullingConfiguration<TypedValue<DateTimeOffset>> (TimeSpan.FromSeconds(3), pullingSource, pullingSink));
+            manager.Add(new PullingConfiguration<TypedValue<DateTimeOffset>, DateTimeOffset> (TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 
             manager.ScheduledAction(manager.Configurations.First());
             Assert.Equal("Source", sourceName);
@@ -52,26 +55,28 @@ namespace PullingHook.Tests
         public void DetectChanges()
         {
             var sourceValues = new[] { new TypedValue<int>(1), new TypedValue<int>(2), new TypedValue<int>(3) };
-            var sourceResults = new UnitOfWorkResults<TypedValue<int>>
+            var sourceResults = new UnitOfWork<TypedValue<int>, int>.Results
             {
                 Inserts = sourceValues
             };
-            var newValues = new UnitOfWorkResults<TypedValue<int>>();
+            var newValues = new UnitOfWork<TypedValue<int>, int>.Results();
 
             bool isSinkNotifying = false;
             // ReSharper disable once AccessToModifiedClosure
             var pullingSource = PullingSource.Create("", "", () => sourceValues);
-            var pullingSink = PullingSink.Create<TypedValue<int>>("", "", (name, description, values) =>
+            var pullingSink = PullingSink.Create<TypedValue<int>, int>("", "", (name, description, values) =>
             {
                 isSinkNotifying = true;
                 newValues = values;
             });
 
+            var hasher = new Sha1Hasher();
             var manager = new PullingHookManager<TypedValue<int>, int>(x => x.Value)
             {
-                Storage = new MemoryStorage<TypedValue<int>>()
+                Hasher = hasher,
+                Storage = new MemoryStorage<TypedValue<int>>(hasher)
             };
-            manager.Add(new PullingConfiguration<TypedValue<int>>(TimeSpan.FromSeconds(3), pullingSource, pullingSink));
+            manager.Add(new PullingConfiguration<TypedValue<int>, int>(TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 
             // should have inserts
             manager.ScheduledAction(manager.Configurations.First());

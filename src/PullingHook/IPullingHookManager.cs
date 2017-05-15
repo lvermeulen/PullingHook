@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 namespace PullingHook
 {
-    public interface IPullingHookManager<T>
+    public interface IPullingHookManager<T, TKeyProperty>
     {
         IPullingSourceStorage<T> Storage { get; }
-        Action<IPullingConfiguration<T>> ScheduledAction { get; }
-        IEnumerable<IPullingConfiguration<T>> Configurations { get; }
-        IPullingConfiguration<T> Add(IPullingConfiguration<T> configuration);
-        void Remove(IPullingConfiguration<T> configuration);
+        IHasher Hasher { get; }
+        Action<IPullingConfiguration<T, TKeyProperty>> ScheduledAction { get; }
+        IEnumerable<IPullingConfiguration<T, TKeyProperty>> Configurations { get; }
+        IPullingConfiguration<T, TKeyProperty> Add(IPullingConfiguration<T, TKeyProperty> configuration);
+        void Remove(IPullingConfiguration<T, TKeyProperty> configuration);
     }
 }

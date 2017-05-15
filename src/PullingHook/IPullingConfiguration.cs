@@ -1,9 +1,9 @@
 ﻿namespace PullingHook
 {
-    public interface IPullingConfiguration<T>
+    public interface IPullingConfiguration<T, TKeyProperty>
     {
         IPullingSchedule Schedule { get; }
         IPullingSource<T> Source { get; }
-        IPullingSink<T> Sink { get; }
+        IPullingSink<T, TKeyProperty> Sink { get; }
     }
 }

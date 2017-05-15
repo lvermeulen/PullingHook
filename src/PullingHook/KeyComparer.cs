@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace PullingHook
 {
     public class KeyComparer<T, TKeyProperty> : IEqualityComparer<T>
-        where T : class
     {
         private readonly Func<T, TKeyProperty> _keyPropertySelector;
 
@@ -15,12 +14,12 @@ namespace PullingHook
 
         public bool Equals(T x, T y)
         {
-            if (x == null && y == null)
+            if (EqualityComparer<T>.Default.Equals(x) && EqualityComparer<T>.Default.Equals(y))
             {
                 return true;
             }
 
-            if (x == null || y == null)
+            if (EqualityComparer<T>.Default.Equals(x) || EqualityComparer<T>.Default.Equals(y))
             {
                 return false;
             }
@@ -43,7 +42,7 @@ namespace PullingHook
             return xKeyValue.Equals(yKeyValue);
         }
 
-        public int GetHashCode(T obj) => obj == null || EqualityComparer<TKeyProperty>.Default.Equals(_keyPropertySelector(obj), default(TKeyProperty))
+        public int GetHashCode(T obj) => EqualityComparer<T>.Default.Equals(obj) || EqualityComparer<TKeyProperty>.Default.Equals(_keyPropertySelector(obj), default(TKeyProperty))
             ? base.GetHashCode()
             : _keyPropertySelector(obj).GetHashCode();
     }

@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace PullingHook
 {
-    public class PullingHookManager<T, TKeyProperty> : IPullingHookManager<T>
-        where T : class
+    public class PullingHookManager<T, TKeyProperty> : IPullingHookManager<T, TKeyProperty>
     {
         private readonly Func<T, TKeyProperty> _keyPropertySelector;
-        private readonly List<IPullingConfiguration<T>> _configurations = new List<IPullingConfiguration<T>>();
+        private readonly List<IPullingConfiguration<T, TKeyProperty>> _configurations = new List<IPullingConfiguration<T, TKeyProperty>>();
 
         public IPullingSourceStorage<T> Storage { get; set; }
+        public IHasher Hasher { get; set; }
 
         private void NotifyEach(Action<string, string, T> action, IEnumerable<T> items, string sourceName, string sourceDescription)
         {
@@ -25,7 +25,7 @@ namespace PullingHook
             }
         }
 
-        private void PerformScheduledAction(IPullingConfiguration<T> pullingConfiguration)
+        private void PerformScheduledAction(IPullingConfiguration<T, TKeyProperty> pullingConfiguration)
         {
             // pull new values
             var newValues = pullingConfiguration.Source.Pull()
@@ -39,7 +39,7 @@ namespace PullingHook
             Storage.Store(key, newValues);
 
             // analyze differences
-            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, _keyPropertySelector); //TODO: add excludedPropertyNames
+            var unitOfWork = new UnitOfWork<T, TKeyProperty>(newValues, previousValues, Hasher, _keyPropertySelector);
             var results = unitOfWork.Merge();
 
             // notify all
@@ -56,23 +56,23 @@ namespace PullingHook
             }
         }
 
-        public Action<IPullingConfiguration<T>> ScheduledAction => PerformScheduledAction;
+        public Action<IPullingConfiguration<T, TKeyProperty>> ScheduledAction => PerformScheduledAction;
 
-        public IEnumerable<IPullingConfiguration<T>> Configurations => _configurations.AsEnumerable();
+        public IEnumerable<IPullingConfiguration<T, TKeyProperty>> Configurations => _configurations.AsEnumerable();
 
         public PullingHookManager(Func<T, TKeyProperty> keyPropertySelector)
         {
             _keyPropertySelector = keyPropertySelector;
         }
 
-        public IPullingConfiguration<T> Add(IPullingConfiguration<T> configuration)
+        public IPullingConfiguration<T, TKeyProperty> Add(IPullingConfiguration<T, TKeyProperty> configuration)
         {
             _configurations.Add(configuration);
 
             return configuration;
         }
 
-        public void Remove(IPullingConfiguration<T> configuration)
+        public void Remove(IPullingConfiguration<T, TKeyProperty> configuration)
         {
             _configurations.Remove(configuration);
         }

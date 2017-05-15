@@ -2,10 +2,10 @@
 {
     public class HashedPair<T>
     {
-        public HashedPair(T t)
+        public HashedPair(T t, IHasher hasher)
         {
             Value = t;
-            HashValue = Value.Hash();
+            HashValue = hasher?.Hash(Value);
         }
 
         public string HashValue { get; }

@@ -61,6 +61,10 @@
     <Compile Include="TypeExtensionsShould.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\PullingHook.Hasher.Sha1\PullingHook.Hasher.Sha1.csproj">
+      <Project>{92F7EC1D-D773-4251-869C-7D809A43E509}</Project>
+      <Name>PullingHook.Hasher.Sha1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\PullingHook.Scheduler.FluentScheduler\PullingHook.Scheduler.FluentScheduler.csproj">
       <Project>{1e50e6c0-a7fe-4c18-8029-f79ea2d50f47}</Project>
       <Name>PullingHook.Scheduler.FluentScheduler</Name>

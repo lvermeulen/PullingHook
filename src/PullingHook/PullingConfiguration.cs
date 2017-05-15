@@ -2,13 +2,13 @@
 
 namespace PullingHook
 {
-    public class PullingConfiguration<T> : IPullingConfiguration<T>
+    public class PullingConfiguration<T, TKeyProperty> : IPullingConfiguration<T, TKeyProperty>
     {
         public IPullingSchedule Schedule { get; }
         public IPullingSource<T> Source { get; }
-        public IPullingSink<T> Sink { get; }
+        public IPullingSink<T, TKeyProperty> Sink { get; }
 
-        public PullingConfiguration(TimeSpan interval, IPullingSource<T> pullingSource, IPullingSink<T> pullingSink)
+        public PullingConfiguration(TimeSpan interval, IPullingSource<T> pullingSource, IPullingSink<T, TKeyProperty> pullingSink)
         {
             Schedule = new PullingSchedule { Interval = interval };
             Source = pullingSource;
