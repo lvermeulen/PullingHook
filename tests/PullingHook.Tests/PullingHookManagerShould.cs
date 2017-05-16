@@ -25,9 +25,9 @@ namespace PullingHook.Tests
             string sourceDescription = "";
             var sourceValues = new UnitOfWork<TypedValue<DateTimeOffset>, DateTimeOffset>.Results();
 
-            var pullingSource = PullingSource.Create("Source", "Source description", 
+            var pullingSource = PullingSourceFactory.Create("Source", "Source description", 
                 () => Enumerable.Repeat(new TypedValue<DateTimeOffset>(DateTimeOffset.UtcNow), 1));
-            var pullingSink = PullingSink.Create<TypedValue<DateTimeOffset>, DateTimeOffset> ("Sink", "Sink description",
+            var pullingSink = PullingSinkFactory.Create<TypedValue<DateTimeOffset>, DateTimeOffset> ("Sink", "Sink description",
                 (name, description, values) =>
                 {
                     sourceName = name;
@@ -61,8 +61,8 @@ namespace PullingHook.Tests
 
             bool isSinkNotifying = false;
             // ReSharper disable once AccessToModifiedClosure
-            var pullingSource = PullingSource.Create("", "", () => sourceValues);
-            var pullingSink = PullingSink.Create<TypedValue<int>, int>("", "", (name, description, values) =>
+            var pullingSource = PullingSourceFactory.Create("", "", () => sourceValues);
+            var pullingSink = PullingSinkFactory.Create<TypedValue<int>, int>("", "", (name, description, values) =>
             {
                 isSinkNotifying = true;
                 newValues = values;
