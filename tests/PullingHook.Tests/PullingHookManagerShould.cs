@@ -74,6 +74,9 @@ namespace PullingHook.Tests
             };
             manager.Add(new PullingConfiguration<TypedValue<int>, int>(TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 
+            // should have interval
+            Assert.Equal(TimeSpan.FromSeconds(3), manager.Configurations.FirstOrDefault()?.Schedule.Interval);
+
             // should have inserts
             manager.ScheduledAction(manager.Configurations.First());
             Assert.True(isSinkNotifying);

@@ -1,6 +1,6 @@
-﻿using Fluent = FluentScheduler;
+﻿using FluentScheduler;
 
-namespace PullingHook.Scheduler.FluentScheduler
+namespace PullingHook.Scheduler.Fluent
 {
     public class FluentPullingHookScheduler<T, TKeyProperty> : IPullingScheduler<T, TKeyProperty>
     {
@@ -10,7 +10,7 @@ namespace PullingHook.Scheduler.FluentScheduler
         {
             _pullingHookManager = pullingHookManager;
 
-            var registry = new Fluent.Registry();
+            var registry = new Registry();
             foreach (var pullingConfiguration in _pullingHookManager.Configurations)
             {
                 registry
@@ -19,12 +19,12 @@ namespace PullingHook.Scheduler.FluentScheduler
                     .AndEvery(pullingConfiguration.Schedule.Interval);
             }
 
-            Fluent.JobManager.Start();
+            JobManager.Start();
         }
 
         public void Stop()
         {
-            Fluent.JobManager.StopAndBlock();
+            JobManager.StopAndBlock();
         }
     }
 }

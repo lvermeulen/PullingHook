@@ -7,7 +7,7 @@
     <ProjectGuid>{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PullingHook.Scheduler.FluentScheduler</RootNamespace>
+    <RootNamespace>PullingHook.Scheduler.Fluent</RootNamespace>
     <AssemblyName>PullingHook.Scheduler.FluentScheduler</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
