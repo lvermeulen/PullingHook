@@ -8,16 +8,6 @@ namespace PullingHook.Tests
 {
     public class PullingHookManagerShould
     {
-        private class TypedValue<T>
-        {
-            public T Value { get; }
-
-            public TypedValue(T t)
-            {
-                Value = t;
-            }
-        }
-
         [Fact]
         public void NotifyWhenSourceIsPulled()
         {

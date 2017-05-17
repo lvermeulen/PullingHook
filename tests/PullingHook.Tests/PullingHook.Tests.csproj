@@ -56,8 +56,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableExtensionsShould.cs" />
     <Compile Include="PullingHookManagerShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypedValue.cs" />
     <Compile Include="TypeExtensionsShould.cs" />
   </ItemGroup>
   <ItemGroup>
