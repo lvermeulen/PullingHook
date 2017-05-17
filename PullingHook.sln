@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Fluent", "src\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Scheduler.Fluent", "src\PullingHook.Scheduler.Fluent\PullingHook.Scheduler.Fluent.csproj", "{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Scheduler.Fluent.Tests", "tests\PullingHook.Scheduler.Fluent.Tests\PullingHook.Scheduler.Fluent.Tests.csproj", "{43E92435-EB71-4F6D-BA70-8F6E7CB477FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,11 +48,15 @@ Global
 		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E50E6C0-A7FE-4C18-8029-F79EA2D50F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43E92435-EB71-4F6D-BA70-8F6E7CB477FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43E92435-EB71-4F6D-BA70-8F6E7CB477FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E92435-EB71-4F6D-BA70-8F6E7CB477FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BEEE206D-BCD5-42EE-BAEC-672579D09E54} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
+		{43E92435-EB71-4F6D-BA70-8F6E7CB477FA} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
 	EndGlobalSection
 EndGlobal
