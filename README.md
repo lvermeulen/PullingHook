@@ -1,4 +1,4 @@
-[PullingHook](http://i.imgur.com/GhA9WY5.png?1) 
+![Icon](http://i.imgur.com/GhA9WY5.png?1) 
 # PullingHook 
 [![Build status](https://ci.appveyor.com/api/projects/status/jhwpf0x1f3eo7x3r?svg=true)](https://ci.appveyor.com/project/lvermeulen/pullinghook) [![license](https://img.shields.io/github/license/lvermeulen/pullinghook.svg?maxAge=2592000)](https://github.com/lvermeulen/pullinghook/blob/master/LICENSE) [![NuGet](https://img.shields.io/nuget/vpre/pullinghook.svg?maxAge=2592000)](https://www.nuget.org/packages/pullinghook/) [![Coverage Status](https://coveralls.io/repos/github/lvermeulen/pullinghook/badge.svg?branch=master)](https://coveralls.io/github/lvermeulen/pullinghook?branch=master) [![codecov](https://codecov.io/gh/lvermeulen/pullinghook/branch/master/graph/badge.svg)](https://codecov.io/gh/lvermeulen/pullinghook)
  [![Join the chat at https://gitter.im/lvermeulen/pullinghook](https://badges.gitter.im/lvermeulen/pullinghook.svg)](https://gitter.im/lvermeulen/pullinghook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![](https://img.shields.io/badge/.net-4.5.2-yellowgreen.svg)
