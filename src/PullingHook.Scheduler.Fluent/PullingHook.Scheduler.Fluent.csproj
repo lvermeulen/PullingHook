@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PullingHook.Scheduler.Fluent</RootNamespace>
-    <AssemblyName>PullingHook.Scheduler.FluentScheduler</AssemblyName>
+    <AssemblyName>PullingHook.Scheduler.Fluent</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="PullingHook.Scheduler.Fluent.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PullingHook\PullingHook.csproj">

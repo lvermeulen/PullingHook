@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>PullingHook</id>
+        <version>1.0.0-alpha</version>
+        <title>PullingHook</title>
+        <authors>Luk Vermeulen</authors>
+        <licenseUrl>https://github.com/lvermeulen/PullingHook/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/lvermeulen/PullingHook</projectUrl>
+        <iconUrl>https://camo.githubusercontent.com/6817ff3cd20121fc5393abb77f18a67d6dae0f02/687474703a2f2f692e696d6775722e636f6d2f476841395759352e706e673f31</iconUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Turn any pull into a push, extensible and on a schedule</description>
+        <copyright>Copyright © 2017</copyright>
+        <tags>pull push hash notification changes</tags>
+    </metadata>
+    <files>
+        <file src="bin\Release\PullingHook.dll" target="lib\net452" />
+    </files>
+</package>
