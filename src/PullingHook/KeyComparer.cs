@@ -14,12 +14,12 @@ namespace PullingHook
 
         public bool Equals(T x, T y)
         {
-            if (EqualityComparer<T>.Default.Equals(x) && EqualityComparer<T>.Default.Equals(y))
+            if (EqualityComparer<T>.Default.Equals(x, default(T)) && EqualityComparer<T>.Default.Equals(y, default(T)))
             {
                 return true;
             }
 
-            if (EqualityComparer<T>.Default.Equals(x) || EqualityComparer<T>.Default.Equals(y))
+            if (EqualityComparer<T>.Default.Equals(x, default(T)) || EqualityComparer<T>.Default.Equals(y, default(T)))
             {
                 return false;
             }
@@ -42,7 +42,7 @@ namespace PullingHook
             return xKeyValue.Equals(yKeyValue);
         }
 
-        public int GetHashCode(T obj) => EqualityComparer<T>.Default.Equals(obj) || EqualityComparer<TKeyProperty>.Default.Equals(_keyPropertySelector(obj), default(TKeyProperty))
+        public int GetHashCode(T obj) => EqualityComparer<T>.Default.Equals(obj, default(T)) || EqualityComparer<TKeyProperty>.Default.Equals(_keyPropertySelector(obj), default(TKeyProperty))
             ? base.GetHashCode()
             : _keyPropertySelector(obj).GetHashCode();
     }
