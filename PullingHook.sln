@@ -18,6 +18,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55AB83FA-D350-425A-AEA0-430CAB750328}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		codecov.yml = codecov.yml
+		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -27,6 +30,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Scheduler.Fluent.Tests", "test\PullingHook.Scheduler.Fluent.Tests\PullingHook.Scheduler.Fluent.Tests.csproj", "{43E92435-EB71-4F6D-BA70-8F6E7CB477FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullingHook.Fluent.Tests", "test\PullingHook.Fluent.Tests\PullingHook.Fluent.Tests.csproj", "{316EEA6B-CA40-4B06-9AC6-E787A89BA60D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{8FD68F5C-719F-4912-9E84-8A9322BA609A}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.ps1 = build\build.ps1
+		build\cover.ps1 = build\cover.ps1
+		build\test.ps1 = build\test.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
