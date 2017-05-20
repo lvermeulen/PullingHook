@@ -1,5 +1,7 @@
 ﻿using Xunit;
 
+// ReSharper disable ExpressionIsAlwaysNull
+
 namespace PullingHook.Tests
 {
     public class KeyComparerShould

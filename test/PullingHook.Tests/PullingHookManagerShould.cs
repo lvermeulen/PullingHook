@@ -12,13 +12,18 @@ namespace PullingHook.Tests
         [Fact]
         public void NotifyWhenSourceIsPulled()
         {
+            const string SOURCE_NAME = "Source";
+            const string SOURCE_DESCRIPTION = "Source description";
+            const string SINK_NAME = "Sink";
+            const string SINK_DESCRIPTION = "Sink description";
+
             string sourceName = "";
             string sourceDescription = "";
             var sourceValues = new UnitOfWork<TypedValue<DateTimeOffset>, DateTimeOffset>.Results();
 
-            var pullingSource = PullingSourceFactory.Create("Source", "Source description", 
+            var pullingSource = PullingSourceFactory.Create(SOURCE_NAME, SOURCE_DESCRIPTION, 
                 () => Enumerable.Repeat(new TypedValue<DateTimeOffset>(DateTimeOffset.UtcNow), 1));
-            var pullingSink = PullingSinkFactory.Create<TypedValue<DateTimeOffset>, DateTimeOffset> ("Sink", "Sink description",
+            var pullingSink = PullingSinkFactory.Create<TypedValue<DateTimeOffset>, DateTimeOffset> (SINK_NAME, SINK_DESCRIPTION,
                 (name, description, values) =>
                 {
                     sourceName = name;
@@ -32,9 +37,13 @@ namespace PullingHook.Tests
             };
             manager.Add(new PullingConfiguration<TypedValue<DateTimeOffset>, DateTimeOffset> (TimeSpan.FromSeconds(3), pullingSource, pullingSink));
 
-            manager.ScheduledAction(manager.Configurations.First());
-            Assert.Equal("Source", sourceName);
-            Assert.Equal("Source description", sourceDescription);
+            var firstConfiguration = manager.Configurations.First();
+            Assert.Equal(SINK_NAME, firstConfiguration.Sink.Name);
+            Assert.Equal(SINK_DESCRIPTION, firstConfiguration.Sink.Description);
+
+            manager.ScheduledAction(firstConfiguration);
+            Assert.Equal(SOURCE_NAME, sourceName);
+            Assert.Equal(SOURCE_DESCRIPTION, sourceDescription);
             Assert.True(sourceValues.Updates.All(x => x.Value > DateTimeOffset.MinValue)
                 || sourceValues.Inserts.All(x => x.Value > DateTimeOffset.MinValue)
                 || sourceValues.Deletes.All(x => x.Value > DateTimeOffset.MinValue));
