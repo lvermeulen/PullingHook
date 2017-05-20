@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using NSubstitute;
 using PullingHook.Hasher.Sha1;
 using PullingHook.Storage.Memory;
 using Xunit;
@@ -93,6 +94,19 @@ namespace PullingHook.Tests
             Assert.Equal(1, numInserts);
             Assert.Equal(0, numUpdates);
             Assert.Equal(2, numDeletes);
+        }
+
+        [Fact]
+        public void AddAndRemoveConfigurations()
+        {
+            var configuration = Substitute.For<IPullingConfiguration<TypedValue<int>, int>>();
+            var manager = new PullingHookManager<TypedValue<int>, int>(x => x.Value);
+
+            manager.Add(configuration);
+            Assert.Equal(1, manager.Configurations.Count());
+
+            manager.Remove(configuration);
+            Assert.Equal(0, manager.Configurations.Count());
         }
     }
 }
