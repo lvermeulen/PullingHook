@@ -7,16 +7,17 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "PullingHook.Scheduler.Fluent": { "target": "project" },
     "NSubstitute": "2.0.3",
-    "FluentScheduler":  "5.2.1",
+    "FluentScheduler": "5.2.1",
     "OpenCover": "4.6.519",
-    "xunit": "2.2.0-beta4-build3444" },
+    "xunit": "2.2.0"
+  },
 
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.1"
+          "version": "1.1.2"
         }
       }
     }
