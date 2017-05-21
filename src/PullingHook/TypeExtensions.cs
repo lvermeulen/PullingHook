@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 namespace PullingHook
 {
@@ -7,9 +8,9 @@ namespace PullingHook
     {
         public static string GetAllTypeNames(this Type type)
         {
-            if (type.IsGenericType)
+            if (type.GetTypeInfo().IsGenericType)
             {
-                return string.Join(",", Enumerable.Repeat(type.Name, 1).Union(type.GetGenericArguments().Select(GetAllTypeNames)));
+                return string.Join(",", Enumerable.Repeat(type.Name, 1).Union(type.GetTypeInfo().GenericTypeArguments.Select(GetAllTypeNames)));
             }
 
             return type.Name;

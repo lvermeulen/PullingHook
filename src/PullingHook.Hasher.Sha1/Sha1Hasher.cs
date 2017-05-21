@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,7 +17,7 @@ namespace PullingHook.Hasher.Sha1
         {
             _encoding = encoding ?? Encoding.ASCII;
             _excludePropertyNames = excludePropertyNames;
-            _hashAlgorithm = new SHA1CryptoServiceProvider();
+            _hashAlgorithm = SHA1.Create();
         }
 
         public string Hash(object obj)
@@ -24,7 +25,7 @@ namespace PullingHook.Hasher.Sha1
             // get properties with values to hash
             var props = obj.GetType()
                 .GetProperties()
-                .Where(p => _excludePropertyNames == null || !_excludePropertyNames.Contains(p.Name, StringComparer.InvariantCultureIgnoreCase));
+                .Where(p => _excludePropertyNames == null || !_excludePropertyNames.Contains(p.Name, StringComparer.OrdinalIgnoreCase));
 
             // get property values to hash
             string hashSource = string.Join("þ", props.Select(x => x.GetValue(obj)?.ToString() ?? ""));
