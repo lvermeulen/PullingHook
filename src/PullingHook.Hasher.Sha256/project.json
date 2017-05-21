@@ -1,14 +1,14 @@
-{
-  "title": "PullingHook",
+﻿{
+  "title": "PullingHook.Hasher.Sha56",
   "version": "1.0.0-alpha",
   "authors": [ "Luk Vermeulen" ],
   "copyright": "Copyright 2017",
-  "description": "Turn any pull into a push, extensible and on a schedule",
+  "description": "SHA256 hasher for PullingHook",
   "packOptions": {
     "owners": [ "Luk Vermeulen" ],
     "requireLicenseAcceptance": true,
-    "summary": "Turn any pull into a push, extensible and on a schedule",
-    "tags": [ "pull", "push", "hash", "notification", "changes" ],
+    "summary": "SHA56 hasher for PullingHook",
+    "tags": [ "pull", "push", "hash", "notification", "changes", "hasher", "sha26" ],
     "projectUrl": "https://github.com/lvermeulen/PullingHook",
     "licenseUrl": "https://github.com/lvermeulen/PullingHook/blob/master/LICENSE",
     "iconUrl": "http://i.imgur.com/WnKfKOC.png?1",
@@ -17,6 +17,11 @@
       "url": "https://github.com/lvermeulen/PullingHook"
     }
   },
+
+  "dependencies": {
+    "PullingHook": { "target": "project" }
+  },
+
   "frameworks": {
     "net452": {},
     "netstandard1.4": {

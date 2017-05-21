@@ -38,6 +38,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PullingHook.Hasher.Sha1", "
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PullingHook.Storage.Memory", "src\PullingHook.Storage.Memory\PullingHook.Storage.Memory.xproj", "{FE8D2443-EFD9-4F2F-9AE4-15BA23820C2F}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PullingHook.Hasher.Sha256", "src\PullingHook.Hasher.Sha256\PullingHook.Hasher.Sha256.xproj", "{DCEA33C8-3080-4E5E-A7CF-10E88CD91312}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PullingHook.Hasher.Tests", "test\PullingHook.Hasher.Tests\PullingHook.Hasher.Tests.xproj", "{DD73482E-699E-44CA-93E1-5D9CE27474B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,13 @@ Global
 		{FE8D2443-EFD9-4F2F-9AE4-15BA23820C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE8D2443-EFD9-4F2F-9AE4-15BA23820C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE8D2443-EFD9-4F2F-9AE4-15BA23820C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCEA33C8-3080-4E5E-A7CF-10E88CD91312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEA33C8-3080-4E5E-A7CF-10E88CD91312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEA33C8-3080-4E5E-A7CF-10E88CD91312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEA33C8-3080-4E5E-A7CF-10E88CD91312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD73482E-699E-44CA-93E1-5D9CE27474B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD73482E-699E-44CA-93E1-5D9CE27474B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD73482E-699E-44CA-93E1-5D9CE27474B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +92,6 @@ Global
 		{4A034B04-0672-4380-BD50-D4A7178EFA53} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
 		{99837E50-3AF2-46F1-B237-F1E03517EFC0} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
 		{4CEF9160-08A9-4DF7-A2AB-94181DDD1B83} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
+		{DD73482E-699E-44CA-93E1-5D9CE27474B3} = {87BD471F-ADE0-4BF4-A1B7-8FFE720536B7}
 	EndGlobalSection
 EndGlobal

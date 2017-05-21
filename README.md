@@ -22,11 +22,12 @@ PullingHook turns any pull into a push, **remembering the previous values pulled
         .When(TimeSpan.FromSeconds(5), () => new[] { myType1, myType2, myType3 })
         .Then((name, description, changes) => 
 			{ 
-				Console.WriteLine($"Source {name} with description {description} has a bunch of changes since last time in {changes}.") 
-			})
-        .OnAdded((name, description, item) => { })
-        .OnUpdated((name, description, item) => { })
-        .OnRemoved((name, description, item) => { });
+				Console.WriteLine($"Source name: {name}");
+				Console.WriteLine($"Source description: {description}");
+                Console.WriteLine($"Added: {changes.Inserts.Count()}");
+                Console.WriteLine($"Changed: {changes.Updates.Count()}");
+                Console.WriteLine($"Removed: {changes.Deletes.Count()}");
+			});
 
     var stoppablePullingHook = pullingHook.Start();
 
@@ -35,7 +36,7 @@ PullingHook turns any pull into a push, **remembering the previous values pulled
 
 * Extensible storage:
 
-Memory-based storage is provided in **PullingHook.Storage.Memory**. To implement your own storage, the following interface is provided:
+Memory-based storage is provided in **PullingHook.Storage.Memory**. To implement your own storage:
 ~~~~
     public interface IPullingSourceStorage<T>
     {
@@ -48,7 +49,7 @@ A HashedPair<T> is a pair of T with its string hash value.
 
 * Extensible hashing:
 
-SHA1 hashing is provided in **PullingHook.Hasher.Sha1**. To implement your own hashing, the following interface is provided:
+SHA256 and SHA1 hashing are provided in **PullingHook.Hasher.Sha1**. To implement your own hashing (or provide a HashAlgorithm to HasherBase):
 ~~~~
     public interface IHasher
     {
@@ -58,7 +59,7 @@ SHA1 hashing is provided in **PullingHook.Hasher.Sha1**. To implement your own h
 
 * Extensible scheduling:
 
-Scheduling is provided in **PullingHook.Scheduler.Fluent**. To implement your own scheduling, the following interface is provided:
+Scheduling is provided in **PullingHook.Scheduler.Fluent**. To implement your own scheduling:
 ~~~~
     public interface IPullingScheduler<T, TKeyProperty>
     {
