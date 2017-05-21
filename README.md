@@ -15,12 +15,12 @@ PullingHook turns any pull into a push, **remembering the previous values pulled
 
 * Fluent builder:
 ~~~~
-    var pullingHook = PullingHook<MyType, Guid>
-        .WithKeyProperty(x => x.Id)
-        .WithStorage(new MemoryStorage<decimal>(new Sha1Hasher()))
-        .WithScheduler(new FluentPullingHookScheduler<MyType, Guid>())
-        .When(TimeSpan.FromSeconds(5), () => new[] { myType1, myType2, myType3 })
-        .Then((name, description, changes) => 
+	var pullingHook = PullingHook<MyType, Guid>
+		.WithKeyProperty(x => x.Id)
+		.WithStorage(new MemoryStorage<decimal>(new Sha1Hasher()))
+		.WithScheduler(new FluentPullingHookScheduler<MyType, Guid>())
+		.When(TimeSpan.FromSeconds(5), () => new[] { myType1, myType2, myType3 })
+		.Then((name, description, changes) => 
 		{ 
 			Console.WriteLine($"Source name: {name}");
 			Console.WriteLine($"Source description: {description}");
@@ -28,44 +28,44 @@ PullingHook turns any pull into a push, **remembering the previous values pulled
 			Console.WriteLine($"Changed: {changes.Updates.Count()}");
 			Console.WriteLine($"Removed: {changes.Deletes.Count()}");
 		});
-
-    var stoppablePullingHook = pullingHook.Start();
-
-    stoppablePullingHook.Stop();
+	
+	var stoppablePullingHook = pullingHook.Start();
+	
+	stoppablePullingHook.Stop();
 ~~~~
 
 * Extensible storage:
 
 Memory-based storage is provided in **PullingHook.Storage.Memory**. To implement your own storage:
 ~~~~
-    public interface IPullingSourceStorage<T>
-    {
-        IEnumerable<HashedPair<T>> Retrieve(string key);
-        IEnumerable<HashedPair<T>> Store(string key, IEnumerable<T> values);
-    }
+	public interface IPullingSourceStorage<T>
+	{
+		IEnumerable<HashedPair<T>> Retrieve(string key);
+		IEnumerable<HashedPair<T>> Store(string key, IEnumerable<T> values);
+	}
 ~~~~
 
 A HashedPair<T> is a pair of T with its string hash value.
 
 * Extensible hashing:
 
-SHA256 and SHA1 hashing are provided in **PullingHook.Hasher.Sha1**. To implement your own hashing (or provide a HashAlgorithm to HasherBase):
+SHA256 and SHA1 hashing are provided in **PullingHook.Hasher.Sha256** and **PullingHook.Hasher.Sha1**. To implement your own hashing:
 ~~~~
-    public interface IHasher
-    {
-        string Hash(object obj);
-    }
+	public interface IHasher
+	{
+		string Hash(object obj);
+	}
 ~~~~
 
 * Extensible scheduling:
 
 Scheduling is provided in **PullingHook.Scheduler.Fluent**. To implement your own scheduling:
 ~~~~
-    public interface IPullingScheduler<T, TKeyProperty>
-    {
-        void Start(IPullingHookManager<T, TKeyProperty> pullingHookManager);
-        void Stop();
-    }
+	public interface IPullingScheduler<T, TKeyProperty>
+	{
+		void Start(IPullingHookManager<T, TKeyProperty> pullingHookManager);
+		void Stop();
+	}
 ~~~~
 
 ## Thanks
