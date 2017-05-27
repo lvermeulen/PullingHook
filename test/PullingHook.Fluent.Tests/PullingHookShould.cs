@@ -16,7 +16,11 @@ namespace PullingHook.Fluent.Tests
                 .WithStorage(new MemoryStorage<decimal>(new Sha1Hasher()))
                 .WithScheduler(new FluentPullingHookScheduler<decimal, decimal>())
                 .When(TimeSpan.FromSeconds(500), () => new[] {1M, 2M, 3M})
-                .Then((name, description, changes) => { });
+                .Then((name, description, changes) => { })
+                .OnAdded((name, description, item) => { })
+                .OnChanged((name, description, item) => { })
+                .OnRemoved((name, description, item) => { })
+                .Build();
 
             Assert.IsType<StartablePullingHook<decimal, decimal>>(pullingHook);
 

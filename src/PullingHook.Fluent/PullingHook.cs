@@ -60,52 +60,67 @@ namespace PullingHook.Fluent
     {
         private IPullingHookManager<T, TKeyProperty> _manager;
 
-        private StartablePullingHook<T, TKeyProperty> Build(Action<string, string, UnitOfWork<T, TKeyProperty>.Results> pusher = null, string sinkName = null, string sinkDescription = null)
+        public PullingHookWithSink<T, TKeyProperty> Then(Action<string, string, UnitOfWork<T, TKeyProperty>.Results> pusher, string sinkName = null, string sinkDescription = null)
         {
-            PullingSink = PullingSinkFactory.Create(sinkName, sinkDescription, pusher ?? ((name, description, results) => { }));
+            PullingSink = PullingSinkFactory.Create(sinkName, sinkDescription, pusher);
 
-            _manager = new PullingHookManager<T, TKeyProperty>(KeyPropertySelector) { Storage = Storage };
+            _manager = new PullingHookManager<T, TKeyProperty>(KeyPropertySelector)
+            {
+                Storage = Storage
+            };
             _manager.Add(new PullingConfiguration<T, TKeyProperty>(Interval, PullingSource, PullingSink));
 
-            return new StartablePullingHook<T, TKeyProperty>(_manager, Scheduler);
-        }
-
-        public StartablePullingHook<T, TKeyProperty> Then(Action<string, string, UnitOfWork<T, TKeyProperty>.Results> pusher, string sinkName = null, string sinkDescription = null) => 
-            Build(pusher, sinkName, sinkDescription);
-
-        public StartablePullingHook<T, TKeyProperty> OnAdded(Action<string, string, T> adder)
-        {
-            var result = Build();
-            PullingSink.OnAdded = adder;
-
-            return result;
-        }
-
-        public StartablePullingHook<T, TKeyProperty> OnUpdated(Action<string, string, T> updater)
-        {
-            var result = Build();
-            PullingSink.OnUpdated = updater;
-
-            return result;
-        }
-
-        public StartablePullingHook<T, TKeyProperty> OnRemoved(Action<string, string, T> remover)
-        {
-            var result = Build();
-            PullingSink.OnRemoved = remover;
-
-            return result;
+            return new PullingHookWithSink<T, TKeyProperty>(Scheduler, PullingSink, _manager);
         }
     }
 
-    public class StartablePullingHook<T, TKeyProperty> : PullingHookWithSource<T, TKeyProperty>
+    public class PullingHookWithSink<T, TKeyProperty> : PullingHookBuilder<T, TKeyProperty>
     {
+        private readonly IPullingScheduler<T, TKeyProperty> _scheduler;
+        private readonly IPullingSink<T, TKeyProperty> _sink;
         private readonly IPullingHookManager<T, TKeyProperty> _manager;
 
-        public StartablePullingHook(IPullingHookManager<T, TKeyProperty> manager, IPullingScheduler<T, TKeyProperty> scheduler)
+        public PullingHookWithSink(IPullingScheduler<T, TKeyProperty> scheduler, IPullingSink<T, TKeyProperty> sink, IPullingHookManager<T, TKeyProperty> manager)
         {
+            _scheduler = scheduler;
+            _sink = sink;
             _manager = manager;
-            Scheduler = scheduler;
+        }
+
+        public StartablePullingHook<T, TKeyProperty> Build() => 
+            new StartablePullingHook<T, TKeyProperty>(_scheduler, _manager);
+
+        public PullingHookWithSink<T, TKeyProperty> OnAdded(Action<string, string, T> adder)
+        {
+            _sink.OnAdded = adder;
+
+            return this;
+        }
+
+        public PullingHookWithSink<T, TKeyProperty> OnChanged(Action<string, string, T> updater)
+        {
+            _sink.OnUpdated = updater;
+
+            return this;
+        }
+
+        public PullingHookWithSink<T, TKeyProperty> OnRemoved(Action<string, string, T> remover)
+        {
+            _sink.OnRemoved = remover;
+
+            return this;
+        }
+    }
+
+    public class StartablePullingHook<T, TKeyProperty>
+    {
+        private readonly IPullingScheduler<T, TKeyProperty> _scheduler;
+        private readonly IPullingHookManager<T, TKeyProperty> _manager;
+
+        public StartablePullingHook(IPullingScheduler<T, TKeyProperty> scheduler, IPullingHookManager<T, TKeyProperty> manager)
+        {
+            _scheduler = scheduler;
+            _manager = manager;
         }
 
         public void Pull()
@@ -118,8 +133,8 @@ namespace PullingHook.Fluent
 
         public StoppablePullingHook<T, TKeyProperty> Start()
         {
-            Scheduler.Start(_manager);
-            return new StoppablePullingHook<T, TKeyProperty>(Scheduler);
+            _scheduler.Start(_manager);
+            return new StoppablePullingHook<T, TKeyProperty>(_scheduler);
         }
     }
 

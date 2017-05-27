@@ -31,10 +31,10 @@ namespace PullingHook
 
             // get previous values
             string key = typeof(T).GetAllTypeNames();
-            var previousValues = Storage.Retrieve(key);
+            var previousValues = Storage?.Retrieve(key);
 
             // store new values
-            var hashedNewValues = Storage.Store(key, newValues);
+            var hashedNewValues = Storage?.Store(key, newValues);
 
             // analyze differences
             var unitOfWork = new UnitOfWork<T, TKeyProperty>(hashedNewValues, previousValues, _keyPropertySelector);
