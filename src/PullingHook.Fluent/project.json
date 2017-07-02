@@ -8,7 +8,7 @@
     "owners": [ "Luk Vermeulen" ],
     "requireLicenseAcceptance": true,
     "summary": "Fluent interface for PullingHook",
-    "tags": [ "pull", "push", "hash", "notification", "changes", "fluent", "interface" ],
+    "tags": [ "pull", "push", "hash", "notification", "changes", "webhook", "fluent", "interface" ],
     "projectUrl": "https://github.com/lvermeulen/PullingHook",
     "licenseUrl": "https://github.com/lvermeulen/PullingHook/blob/master/LICENSE",
     "iconUrl": "http://i.imgur.com/GhA9WY5.png?1",

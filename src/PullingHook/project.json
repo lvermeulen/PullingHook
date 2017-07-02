@@ -8,7 +8,7 @@
     "owners": [ "Luk Vermeulen" ],
     "requireLicenseAcceptance": true,
     "summary": "Turn any pull into a push, extensible and on a schedule",
-    "tags": [ "pull", "push", "hash", "notification", "changes" ],
+    "tags": [ "pull", "push", "hash", "notification", "changes", "webhook" ],
     "projectUrl": "https://github.com/lvermeulen/PullingHook",
     "licenseUrl": "https://github.com/lvermeulen/PullingHook/blob/master/LICENSE",
     "iconUrl": "http://i.imgur.com/GhA9WY5.png?1",

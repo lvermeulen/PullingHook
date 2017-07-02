@@ -8,7 +8,7 @@
     "owners": [ "Luk Vermeulen" ],
     "requireLicenseAcceptance": true,
     "summary": "Memory storage for PullingHook",
-    "tags": [ "pull", "push", "hash", "notification", "changes", "memory", "storage" ],
+    "tags": [ "pull", "push", "hash", "notification", "changes", "webhook", "memory", "storage" ],
     "projectUrl": "https://github.com/lvermeulen/PullingHook",
     "licenseUrl": "https://github.com/lvermeulen/PullingHook/blob/master/LICENSE",
     "iconUrl": "http://i.imgur.com/GhA9WY5.png?1",
