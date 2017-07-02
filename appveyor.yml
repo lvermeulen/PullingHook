@@ -7,7 +7,7 @@ pull_requests:
 environment:
   COVERALLS_REPO_TOKEN:
     secure: Z4+/jxAvo+yaVszlGT/QVGGdm0+F044l8SsVsizw/uERgvoQmmzvlOkoTtD4+n0A
-  COVER_FILTER: '+[PullingHook*]* -[*]*.Logging.* -[*Tests]*'
+  COVER_FILTER: '+[PullingHook*]* -[*]*.Logging.* -[*Tests]* -[*NancyWebhook*]*'
 build_script:
 - ps: .\build\build.ps1 $env:APPVEYOR_BUILD_VERSION $env:APPVEYOR_REPO_TAG_NAME
 #before_test:

@@ -8,8 +8,11 @@ PullingHook turns any pull into a push, **remembering the previous values pulled
 ## Features:
 * Fluent builder
 * Extensible storage
-* Extensible hashing
 * Extensible scheduling
+
+## Samples:
+* NancyWebhookProducer runs PullingHook and sends a webhook for any detected stock change to its subscribers
+* NancyWebhookConsumer subscribes to NancyWebhookProducer and receives a webhook for any stock change
 
 ## Usage:
 
@@ -42,18 +45,6 @@ public interface IPullingSourceStorage<T>
 {
 	IEnumerable<HashedPair<T>> Retrieve(string key);
 	IEnumerable<HashedPair<T>> Store(string key, IEnumerable<T> values);
-}
-~~~~
-
-A HashedPair<T> is a pair of T with its string hash value.
-
-* Extensible hashing:
-
-SHA256 and SHA1 hashing are provided in **PullingHook.Hasher.Sha256** and **PullingHook.Hasher.Sha1**. To implement your own hashing:
-~~~~
-public interface IHasher
-{
-	string Hash(object obj);
 }
 ~~~~
 
