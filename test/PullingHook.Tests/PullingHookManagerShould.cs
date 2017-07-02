@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Dispenser;
+using Dispenser.Hasher.Sha1;
 using NSubstitute;
-using PullingHook.Hasher.Sha1;
 using PullingHook.Storage.Memory;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace PullingHook.Tests
 
             string sourceName = "";
             string sourceDescription = "";
-            var sourceValues = new UnitOfWork<TypedValue<DateTimeOffset>, DateTimeOffset>.Results();
+            var sourceValues = new Dispenser<TypedValue<DateTimeOffset>, DateTimeOffset>.Results();
 
             var pullingSource = PullingSourceFactory.Create(SOURCE_NAME, SOURCE_DESCRIPTION, 
                 () => Enumerable.Repeat(new TypedValue<DateTimeOffset>(DateTimeOffset.UtcNow), 1));
@@ -53,11 +54,11 @@ namespace PullingHook.Tests
         public void DetectChanges()
         {
             var sourceValues = new[] { new TypedValue<int>(1), new TypedValue<int>(2), new TypedValue<int>(3) };
-            var sourceResults = new UnitOfWork<TypedValue<int>, int>.Results
+            var sourceResults = new Dispenser<TypedValue<int>, int>.Results
             {
                 Inserts = sourceValues
             };
-            var newValues = new UnitOfWork<TypedValue<int>, int>.Results();
+            var newValues = new Dispenser<TypedValue<int>, int>.Results();
 
             bool isSinkNotifying = false;
             // ReSharper disable once AccessToModifiedClosure

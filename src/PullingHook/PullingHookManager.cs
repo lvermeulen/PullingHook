@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dispenser;
 
 namespace PullingHook
 {
@@ -8,8 +9,9 @@ namespace PullingHook
     {
         private readonly Func<T, TKeyProperty> _keyPropertySelector;
         private readonly List<IPullingConfiguration<T, TKeyProperty>> _configurations = new List<IPullingConfiguration<T, TKeyProperty>>();
+        private readonly Dispenser<T, TKeyProperty> _dispenser = new Dispenser<T, TKeyProperty>();
 
-        public IPullingSourceStorage<T> Storage { get; set; }
+        public IHashedPairStorage<T> Storage { get; set; }
 
         private void NotifyEach(Action<string, string, T> action, IEnumerable<T> items, string sourceName, string sourceDescription)
         {
@@ -37,8 +39,7 @@ namespace PullingHook
             var hashedNewValues = Storage?.Store(key, newValues);
 
             // analyze differences
-            var unitOfWork = new UnitOfWork<T, TKeyProperty>(hashedNewValues, previousValues, _keyPropertySelector);
-            var results = unitOfWork.Merge();
+            var results = _dispenser.Dispense(hashedNewValues, previousValues, _keyPropertySelector);
 
             // notify all
             var source = pullingConfiguration.Source;
@@ -54,9 +55,11 @@ namespace PullingHook
             }
         }
 
-        public Action<IPullingConfiguration<T, TKeyProperty>> ScheduledAction => PerformScheduledAction;
+        public Action<IPullingConfiguration<T, TKeyProperty>> ScheduledAction => 
+            PerformScheduledAction;
 
-        public IEnumerable<IPullingConfiguration<T, TKeyProperty>> Configurations => _configurations.AsEnumerable();
+        public IEnumerable<IPullingConfiguration<T, TKeyProperty>> Configurations => 
+            _configurations.AsEnumerable();
 
         public PullingHookManager(Func<T, TKeyProperty> keyPropertySelector)
         {

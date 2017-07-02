@@ -5,7 +5,7 @@ namespace PullingHook
 {
     public interface IPullingHookManager<T, TKeyProperty>
     {
-        IPullingSourceStorage<T> Storage { get; }
+        IHashedPairStorage<T> Storage { get; }
         Action<IPullingConfiguration<T, TKeyProperty>> ScheduledAction { get; }
         IEnumerable<IPullingConfiguration<T, TKeyProperty>> Configurations { get; }
         IPullingConfiguration<T, TKeyProperty> Add(IPullingConfiguration<T, TKeyProperty> configuration);

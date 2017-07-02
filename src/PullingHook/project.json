@@ -17,6 +17,11 @@
       "url": "https://github.com/lvermeulen/PullingHook"
     }
   },
+
+  "dependencies": {
+    "Dispenser": "1.0.0"
+  },
+
   "frameworks": {
     "net452": {},
     "netstandard1.4": {

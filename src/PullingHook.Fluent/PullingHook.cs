@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dispenser;
 
 namespace PullingHook.Fluent
 {
@@ -15,7 +16,7 @@ namespace PullingHook.Fluent
     public abstract class PullingHookBuilder<T, TKeyProperty>
     {
         internal Func<T, TKeyProperty> KeyPropertySelector { get; set; }
-        internal IPullingSourceStorage<T> Storage { get; set; }
+        internal IHashedPairStorage<T> Storage { get; set; }
         internal IPullingScheduler<T, TKeyProperty> Scheduler { get; set; }
         internal TimeSpan Interval { get; set; }
         internal IPullingSource<T> PullingSource { get; set; }
@@ -24,7 +25,7 @@ namespace PullingHook.Fluent
 
     public class PullingHookWithKeyPropertySelector<T, TKeyProperty> : PullingHookBuilder<T, TKeyProperty>
     {
-        public PullingHookWithStorage<T, TKeyProperty> WithStorage(IPullingSourceStorage<T> storage) => 
+        public PullingHookWithStorage<T, TKeyProperty> WithStorage(IHashedPairStorage<T> storage) => 
             new PullingHookWithStorage<T, TKeyProperty>
             {
                 KeyPropertySelector = KeyPropertySelector,
@@ -60,7 +61,7 @@ namespace PullingHook.Fluent
     {
         private IPullingHookManager<T, TKeyProperty> _manager;
 
-        public PullingHookWithSink<T, TKeyProperty> Then(Action<string, string, UnitOfWork<T, TKeyProperty>.Results> pusher, string sinkName = null, string sinkDescription = null)
+        public PullingHookWithSink<T, TKeyProperty> Then(Action<string, string, Dispenser<T, TKeyProperty>.Results> pusher, string sinkName = null, string sinkDescription = null)
         {
             PullingSink = PullingSinkFactory.Create(sinkName, sinkDescription, pusher);
 

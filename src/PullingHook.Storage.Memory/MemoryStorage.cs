@@ -1,12 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using Dispenser;
 
 // ReSharper disable PossibleMultipleEnumeration
 
 namespace PullingHook.Storage.Memory
 {
-    public class MemoryStorage<T> : IPullingSourceStorage<T>
+    public class MemoryStorage<T> : IHashedPairStorage<T>
     {
         private readonly IHasher _hasher;
         private readonly ConcurrentDictionary<string, IEnumerable<HashedPair<T>>> _storage = new ConcurrentDictionary<string, IEnumerable<HashedPair<T>>>();

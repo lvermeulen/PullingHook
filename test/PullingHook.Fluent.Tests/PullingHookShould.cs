@@ -1,5 +1,5 @@
 ﻿using System;
-using PullingHook.Hasher.Sha1;
+using Dispenser.Hasher.Sha1;
 using PullingHook.Scheduler.Fluent;
 using PullingHook.Storage.Memory;
 using Xunit;
