@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Turn any pull into a push, extensible and on a schedule</Description>
+    <Copyright>Copyright 2017</Copyright>
+    <AssemblyTitle>PullingHook</AssemblyTitle>
+    <VersionPrefix>1.0.0-alpha</VersionPrefix>
+    <Authors>Luk Vermeulen</Authors>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <AssemblyName>PullingHook</AssemblyName>
+    <PackageId>PullingHook</PackageId>
+    <PackageTags>pull;push;hash;notification;changes;webhook</PackageTags>
+    <PackageIconUrl>http://i.imgur.com/GhA9WY5.png?1</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/lvermeulen/PullingHook</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/lvermeulen/PullingHook/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/lvermeulen/PullingHook</RepositoryUrl>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.4' ">1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dispenser" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
